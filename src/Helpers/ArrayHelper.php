@@ -51,7 +51,7 @@ class ArrayHelper
      */
     public static function toIterator($array): \Traversable
     {
-        if ( ! $array instanceof \Traversable) {
+        if (!$array instanceof \Traversable) {
             $array = new \ArrayObject((array)$array);
         }
 
@@ -129,11 +129,11 @@ class ArrayHelper
      */
     public static function merge($src, array $new)
     {
-        if ( ! $src || ! \is_array($src)) {
+        if (!$src || !\is_array($src)) {
             return $new;
         }
 
-        if ( ! $new) {
+        if (!$new) {
             return $src;
         }
 
@@ -168,7 +168,7 @@ class ArrayHelper
         /** @var array[] $args */
         $res = array_shift($args);
 
-        while ( ! empty($args)) {
+        while (!empty($args)) {
             $next = array_shift($args);
 
             foreach ($next as $k => $v) {
@@ -259,7 +259,7 @@ class ArrayHelper
             if (\is_array($v)) {
                 $newArr[$k] = self::changeValueCase($v, $toUpper);
             } else {
-                $v          = trim($v);
+//                $v          = trim($v);
                 $newArr[$k] = $function($v);
             }
         }
@@ -285,7 +285,7 @@ class ArrayHelper
             $check = strpos($check, ',') !== false ? explode(',', $check) : [$check];
         }
 
-        return ! array_diff((array)$check, $sampleArr);
+        return !array_diff((array)$check, $sampleArr);
     }
 
     /**
@@ -336,7 +336,7 @@ class ArrayHelper
                 $arr  = self::valueToLower($arr);//小写
                 $need = strtolower(trim($need));//小写
 
-                if ( ! \in_array($need, $arr, $type)) {
+                if (!\in_array($need, $arr, $type)) {
                     return $need;
                 }
             }
@@ -400,7 +400,7 @@ class ArrayHelper
 
         foreach ($data as $key => $value) {
             // key is not a integer
-            if ( ! $expectInt || ! is_numeric($key)) {
+            if (!$expectInt || !is_numeric($key)) {
                 $width       = mb_strlen($key, 'UTF-8');
                 $keyMaxWidth = $width > $keyMaxWidth ? $width : $keyMaxWidth;
             }
@@ -429,7 +429,7 @@ class ArrayHelper
 
         $nodes = Str::toArray($path, $separator);
 
-        if ( ! $nodes) {
+        if (!$nodes) {
             return $default;
         }
 
@@ -469,7 +469,7 @@ class ArrayHelper
             return true;
         }
 
-        if ( ! $nodes = Str::toArray($path, $separator)) {
+        if (!$nodes = Str::toArray($path, $separator)) {
             return false;
         }
 
@@ -513,7 +513,7 @@ class ArrayHelper
         foreach ($array as $values) {
             if ($values instanceof CollectionInterface) {
                 $values = $values->all();
-            } elseif ( ! \is_array($values)) {
+            } elseif (!\is_array($values)) {
                 continue;
             }
 
@@ -583,7 +583,7 @@ class ArrayHelper
         $results = [];
 
         foreach ($array as $key => $value) {
-            if (\is_array($value) && ! empty($value)) {
+            if (\is_array($value) && !empty($value)) {
                 $results = array_merge($results, static::dot($value, $prepend.$key.'.'));
             } else {
                 $results[$prepend.$key] = $value;
@@ -636,7 +636,7 @@ class ArrayHelper
      */
     public static function add($array, $key, $value): array
     {
-        if (static::has($array, $key)) {
+        if (!static::has($array, $key)) {
             static::set($array, $key, $value);
         }
 
@@ -654,7 +654,7 @@ class ArrayHelper
      */
     public static function get($array, $key, $default = null)
     {
-        if ( ! static::accessible($array)) {
+        if (!static::accessible($array)) {
             return value($default);
         }
 
@@ -690,7 +690,8 @@ class ArrayHelper
     public static function set(&$array, $key, $value): array
     {
         if (null === $key) {
-            return ($array = $value);
+//            return ($array = $value);
+            return $arraycd ;
         }
 
         $keys = explode('.', $key);
@@ -700,7 +701,7 @@ class ArrayHelper
             // If the key doesn't exist at this depth, we will just create an empty array
             // to hold the next value, allowing us to create the arrays to hold final
             // values at the correct depth. Then we'll keep digging into the array.
-            if ( ! isset($array[$key]) || ! \is_array($array[$key])) {
+            if (!isset($array[$key]) || !\is_array($array[$key])) {
                 $array[$key] = [];
             }
 
@@ -725,7 +726,7 @@ class ArrayHelper
         return array_reduce($array, function ($result, $item) use ($depth) {
             $item = $item instanceof CollectionInterface ? $item->all() : $item;
 
-            if ( ! \is_array($item)) {
+            if (!\is_array($item)) {
                 return array_merge($result, [$item]);
             }
 
@@ -797,7 +798,7 @@ class ArrayHelper
 
         $keys = (array)$keys;
 
-        if ( ! $array) {
+        if (!$array) {
             return false;
         }
 
@@ -933,7 +934,7 @@ class ArrayHelper
      */
     public static function wrap($value): array
     {
-        return ! \is_array($value) ? (array)$value : $value;
+        return !\is_array($value) ? (array)$value : $value;
     }
 
     ////////////////////////////////////////////////////////////
@@ -962,7 +963,7 @@ class ArrayHelper
         $separator = ', ',
         $string = ''
     ): string {
-        if ( ! \is_array($array) || empty($array)) {
+        if (!\is_array($array) || empty($array)) {
             return '';
         }
 
@@ -1029,7 +1030,7 @@ class ArrayHelper
 
     public static function toLimitOut($array): array
     {
-        if ( ! \is_array($array)) {
+        if (!\is_array($array)) {
             return $array;
         }
 

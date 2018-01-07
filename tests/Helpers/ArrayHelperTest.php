@@ -21,12 +21,12 @@ use PHPUnit\Framework\TestCase;
  *
  * @group arr
  * @package Inhere\Library\Tests\Helpers
- * @covers Arr
+ * @covers ArrayHelper
  */
 class ArrayHelperTest extends TestCase
 {
     /**
-     * @covers Arr::accessible()
+     * @covers ArrayHelper::accessible()
      */
     public function testAccessible()
     {
@@ -51,7 +51,7 @@ class ArrayHelperTest extends TestCase
     }
 
     /**
-     * @covers Arr::isAssoc() 检测是否是关联数组
+     * @covers ArrayHelper::isAssoc() 检测是否是关联数组
      */
     public function testIsAssoc()
     {
@@ -107,7 +107,7 @@ class ArrayHelperTest extends TestCase
 
     /**
      * @expectedException \TypeError
-     * @covers Arr::gets()
+     * @covers ArrayHelper::gets()
      */
     public function testGets()
     {
@@ -123,7 +123,7 @@ class ArrayHelperTest extends TestCase
     }
 
     /**
-     * @covers Arr::merge()
+     * @covers ArrayHelper::merge()
      */
     public function testMerge()
     {
@@ -144,7 +144,7 @@ class ArrayHelperTest extends TestCase
     }
 
     /**
-     * @covers Arr::merge2()
+     * @covers ArrayHelper::merge2()
      */
     public function testMerge2()
     {
@@ -167,7 +167,7 @@ class ArrayHelperTest extends TestCase
 
 
     /**
-     * @covers Arr::valueTrim()
+     * @covers ArrayHelper::valueTrim()
      */
     public function testValueTrim()
     {
@@ -187,7 +187,7 @@ class ArrayHelperTest extends TestCase
     }
 
     /**
-     * @covers Arr::keyExists()
+     * @covers ArrayHelper::keyExists()
      */
     public function testKeyExists()
     {
@@ -213,7 +213,7 @@ class ArrayHelperTest extends TestCase
     }
 
     /**
-     * @covers Arr::valueToLower()
+     * @covers ArrayHelper::valueToLower()
      */
     public function testValueToLower()
     {
@@ -251,7 +251,7 @@ class ArrayHelperTest extends TestCase
     }
 
     /**
-     * @covers Arr::valueExistsOne()
+     * @covers ArrayHelper::valueExistsOne()
      */
     public function testValueExistsOne()
     {
@@ -263,7 +263,7 @@ class ArrayHelperTest extends TestCase
 
     /**
      *
-     * @covers Arr::existsAll()
+     * @covers ArrayHelper::existsAll()
      */
     public function testExistsAll()
     {
@@ -278,7 +278,7 @@ class ArrayHelperTest extends TestCase
 
 
     /**
-     * @covers Arr::existsOne()
+     * @covers ArrayHelper::existsOne()
      */
     public function testExistsOne()
     {
@@ -296,7 +296,7 @@ class ArrayHelperTest extends TestCase
     }
 
     /**
-     * @covers Arr::getKeyMaxWidth()
+     * @covers ArrayHelper::getKeyMaxWidth()
      */
     public function testGetKeyMaxWidth()
     {
@@ -308,7 +308,7 @@ class ArrayHelperTest extends TestCase
     }
 
     /**
-     * @covers Arr::getByPath()
+     * @covers ArrayHelper::getByPath()
      */
     public function testGetByPath()
     {
@@ -330,7 +330,7 @@ class ArrayHelperTest extends TestCase
     }
 
     /**
-     * @covers Arr::setByPath()
+     * @covers ArrayHelper::setByPath()
      */
     public function testSetByPath()
     {
@@ -342,7 +342,7 @@ class ArrayHelperTest extends TestCase
     }
 
     /**
-     * @covers Arr::collapse()
+     * @covers ArrayHelper::collapse()
      */
     public function testCollapse()
     {
@@ -354,7 +354,7 @@ class ArrayHelperTest extends TestCase
     }
 
     /**
-     * @covers Arr::crossJoin()
+     * @covers ArrayHelper::crossJoin()
      */
     public function testCrossJoin()
     {
@@ -366,7 +366,7 @@ class ArrayHelperTest extends TestCase
     /**
      * 把一个数组分成两个数组，一个是建，一个是值
      *
-     * @covers Arr::divide()
+     * @covers ArrayHelper::divide()
      */
     public function testDivide()
     {
@@ -381,7 +381,7 @@ class ArrayHelperTest extends TestCase
     }
 
     /**
-     * @covers Arr::dot()
+     * @covers ArrayHelper::dot()
      */
     public function testDot()
     {
@@ -425,7 +425,7 @@ class ArrayHelperTest extends TestCase
     }
 
     /**
-     * @covers Arr::except()
+     * @covers ArrayHelper::except()
      */
     public function testExcept()
     {
@@ -439,7 +439,37 @@ class ArrayHelperTest extends TestCase
     }
 
     /**
-     * @covers Arr::wrap()
+     * @covers ArrayHelper::exists()
+     */
+    public function testExists()
+    {
+        $this->assertTrue(Arr::exists(['name' => 'lisi'], 'name'));
+        $this->assertTrue(Arr::exists(['lisi'], 0));
+    }
+
+    /**
+     * @covers ArrayHelper::add()
+     */
+    public function testAdd()
+    {
+        $this->assertSame([], Arr::add([], null, null));
+        $this->assertSame([], Arr::add([], 0, []));
+
+        $this->assertSame(['name'], Arr::add(['lisi'], 0, 'name'));
+        $this->markTestIncomplete('没有over');
+    }
+
+    /**
+     * @covers ArrayHelper::get()
+     */
+    public function testGet()
+    {
+        $arr = ['name' => 'zhangsan', 'age' => '23'];
+
+//        $this
+    }
+    /**
+     * @covers ArrayHelper::wrap()
      */
     public function testWrap()
     {
