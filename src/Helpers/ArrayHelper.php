@@ -691,7 +691,7 @@ class ArrayHelper
     {
         if (null === $key) {
 //            return ($array = $value);
-            return $arraycd ;
+            return $array;
         }
 
         $keys = explode('.', $key);
