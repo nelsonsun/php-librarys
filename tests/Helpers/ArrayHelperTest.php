@@ -9,6 +9,7 @@ namespace Inhere\Library\Tests\Helpers;
 
 use Inhere\Exceptions\InvalidArgumentException;
 use Inhere\Library\Helpers\ArrayHelper as Arr;
+use Inhere\Library\Helpers\ArrayHelper;
 use Inhere\Library\Helpers\Obj;
 use Inhere\Library\Web\Environment;
 use PHPUnit\Framework\Error\Error;
@@ -464,10 +465,85 @@ class ArrayHelperTest extends TestCase
      */
     public function testGet()
     {
-        $arr = ['name' => 'zhangsan', 'age' => '23'];
+        $arr = ['name' => 'zhangsan', 'age' => '23', 'other' => ['sex' => 'boy']];
 
-//        $this
+
+        $this->assertSame('zhangsan', Arr::get($arr, 'name'));
+        $this->assertSame('boy', Arr::get($arr, 'other.sex', 'no data'));
+        $this->assertSame('no data', Arr::get($arr, 'other.age', 'no data'));
     }
+
+    /**
+     * @group ok
+     * @covers ArrayHelper::set()
+     */
+    public function testSet()
+    {
+        $arr = [];
+
+        $this->assertSame(['name' => 'zhangsan'], Arr::set($arr, 'name', 'zhangsan'));
+        $this->assertSame($arr, ['name' => 'zhangsan']);
+        $this->assertSame(Arr::set($arr, 'age', '23'), $arr);
+        Arr::set($arr, 'other.sex', 'boy');
+        $this->assertSame('boy', $arr['other']['sex']);
+    }
+
+    /**
+     * @covers ArrayHelper::flatten()
+     */
+    public function testFlatten()
+    {
+        $arr = [
+            'a' => ['1', '2'],
+            'b' => ['1', '2'],
+        ];
+
+        $this->assertSame(4, count(Arr::flatten($arr)));
+        $arr = Arr::add($arr, 'c', ['1', '2']);
+        $this->assertSame(6, count(Arr::flatten($arr)));
+    }
+
+    /**
+     * @group now
+     * @covers ArrayHelper::forget()
+     */
+    public function testForget()
+    {
+        ob_start();
+        eval('echo 123;');
+        $this->assertSame("123", ob_get_contents());
+        ob_clean();
+        $this->assertSame('', ob_get_contents());
+        ob_end_flush();
+
+        $myFun = function ($arg)
+        {
+            return $arg;
+        };
+
+        $this->assertTrue(is_callable($myFun, false, $callable_name));
+
+
+        $rs = call_user_func($myFun, 1234);
+
+        $this->assertSame(1234, $rs);
+
+
+        $arr = [123];
+        $this->assertSame(123, $arr[0]);
+        unset($arr[0]);
+        $this->assertSame([], $arr);
+        $arr = [123];
+        Arr::forget($arr, 0);
+        $this->assertSame([], $arr);
+
+        $arr = [['a' => ['123' => 'm']]];
+        Arr::forget($arr, '0.a.123');
+        $this->assertSame([['a'=>[]]], $arr);
+    }
+
+
+
     /**
      * @covers ArrayHelper::wrap()
      */
