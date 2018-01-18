@@ -540,6 +540,8 @@ class ArrayHelperTest extends TestCase
         $arr = [['a' => ['123' => 'm']]];
         Arr::forget($arr, '0.a.123');
         $this->assertSame([['a'=>[]]], $arr);
+        $rs = [];
+        $this->assertSame(null, array_shift($rs));
     }
 
 
